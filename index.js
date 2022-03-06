@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors');
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
+const ObjectID = require('mongodb').ObjectId
 
 
 const port = process.env.PORT || 5000;
@@ -22,15 +23,25 @@ async function run() {
       const customerReviews = database.collection('customer-review');
 
     //   Get Method
+    // All Products
     app.get('/all-products',async(re,res)=>{
         const cursor = allProducts.find({});
         const products = await cursor.toArray();
         res.send(products);
     })
+    // Customer Review
     app.get('/customer-review',async(re,res)=>{
         const cursor = customerReviews.find({});
         const customerReview = await cursor.toArray();
         res.send(customerReview);
+    })
+    // GET Single Products
+    app.get('/all-products/:id', async (req, res) => {
+        const id = req.params.id;
+        console.log('getting specific service', id);
+        const query = { _id: ObjectID(id) };
+        const product = await allProducts.findOne(query);
+        res.json(product);
     })
 
 
