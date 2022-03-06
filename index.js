@@ -19,12 +19,18 @@ async function run() {
       await client.connect();
       const database = client.db('ecommerce-site');
       const allProducts = database.collection('all-products');
+      const customerReviews = database.collection('customer-review');
 
     //   Get Method
     app.get('/all-products',async(re,res)=>{
         const cursor = allProducts.find({});
         const products = await cursor.toArray();
         res.send(products);
+    })
+    app.get('/customer-review',async(re,res)=>{
+        const cursor = customerReviews.find({});
+        const customerReview = await cursor.toArray();
+        res.send(customerReview);
     })
 
 
