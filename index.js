@@ -110,7 +110,61 @@ async function run() {
     })
 
 
- 
+                                                 // Post Method //
+    // save registered user to the database
+    app.post('/users', async (req, res) => {
+    const user = req.body;
+    const result = await usersCollection.insertOne(user);
+    res.json(result);
+    })
+
+
+    // post Products to database 
+    app.post('/addProduct', async (req, res) => {
+    const product = req.body;
+    const result = await allProducts.insertOne(product);
+    res.json(result);
+    })
+
+
+    // Post order
+    app.post('/addOrders', async (req, res) => {
+    const order = req.body;
+    console.log("Order", order);
+    const result = await ordersCollection.insertOne(order);
+    console.log(result);
+    res.json(result);
+    })
+
+
+    //add review to the database
+    app.post('/addReview', async (req, res) => {
+    const review = req.body;
+    console.log(review);
+    const result = await reviewCollection.insertOne(review);
+    res.json(result);
+    })
+
+                                                      //   Delete Method //
+
+    // Delete a product
+    app.delete('/all-products/:id', async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    const query = { _id: ObjectId(id) };
+    const result = await allProducts.deleteOne(query);
+    res.send(result);
+
+    })
+
+
+    // Delete an Order
+    app.delete('/orders/:id', async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const result = await ordersCollection.deleteOne(query);
+    res.json(result);
+    })
 
     } 
     finally {
