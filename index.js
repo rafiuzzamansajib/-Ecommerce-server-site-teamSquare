@@ -84,6 +84,34 @@ async function run() {
     })
 
 
+                                                // Put Method //
+    // Update shipping status
+    app.put('/orders/:id', async (req, res) => {
+    const id = req.params.id;
+    const filter = { _id: ObjectID(id) };
+    const updatedStatus = req.body.status;
+    const result = await ordersCollection.updateOne(filter, {
+    $set: {
+    status: updatedStatus,
+    },
+    });
+    res.send(result);
+    console.log(result);
+    }); 
+
+
+    // Make admin
+    app.put('/makeAdmin',async (req,res)=>{
+    const filter={email:req.body.email};
+    const document={$set:{role:"admin"}};
+    const result=await usersCollection.updateOne(filter,document);
+    console.log(result);
+    res.send(result);
+    })
+
+
+ 
+
     } 
     finally {
 
