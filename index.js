@@ -50,6 +50,11 @@ async function run() {
     const customerReview = await cursor.toArray();
     res.send(customerReview);
     })
+    app.get('/users',async(re,res)=>{
+    const cursor = usersCollection.find({});
+    const user = await cursor.toArray();
+    res.send(user);
+    })
 
 
     // Get all orders
